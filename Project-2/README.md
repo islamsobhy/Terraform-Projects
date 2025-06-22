@@ -11,31 +11,7 @@ This project focuses on building a basic yet robust networking foundation on Ama
 * A **single public subnet** dynamically placed in an available Availability Zone.
 * An **Internet Gateway (IGW)** to enable internet connectivity for the VPC.
 * A **public route table** and its association to direct traffic for the public subnet.
-  graph TD
-    subgraph AWS Cloud
-        subgraph MyVPC [VPC: ${var.project_name}-VPC]
-            direction LR
-
-            InternetGateway[Internet Gateway]
-            PublicSubnet[Public Subnet: ${var.public_subnet_cidr}<br/>in ${local.chosen_az}]
-            PublicRouteTable[Public Route Table<br/>(Route: 0.0.0.0/0 -> IGW)]
-
-            InternetGateway --- PublicRouteTable
-            PublicRouteTable --- PublicSubnet
-
-            subgraph Internet
-                I[Internet]
-            end
-
-            I --> InternetGateway
-        end
-    end
-
-    style MyVPC fill:#e0f2f7,stroke:#333,stroke-width:2px
-    style InternetGateway fill:#dce7eb,stroke:#555,stroke-width:1px
-    style PublicSubnet fill:#f0f4f7,stroke:#555,stroke-width:1px
-    style PublicRouteTable fill:#e6eff4,stroke:#555,stroke-width:1px
-
+  
 ## 🚀 Key Concepts & Terraform Skills Practiced:
 
 This project is specifically designed to help you master:
