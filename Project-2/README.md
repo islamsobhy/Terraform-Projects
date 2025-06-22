@@ -117,6 +117,4 @@ Define the following outputs:
 
 ---
 
-Take your time with this project. It's a significant step up in complexity, but mastering these concepts will make you much more powerful with Terraform.
 
-**When you're ready, share your code (or specific parts you're struggling with), and
