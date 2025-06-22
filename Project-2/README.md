@@ -13,7 +13,7 @@ This project focuses on building a basic yet robust networking foundation on Ama
 * A **public route table** and its association to direct traffic for the public subnet.
 
 ```mermaid
-* graph TD
+graph TD
     subgraph AWS Cloud
         subgraph MyVPC [VPC: ${var.project_name}-VPC]
             direction LR
