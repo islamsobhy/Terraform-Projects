@@ -1,4 +1,4 @@
-# AWS Foundational Networking with Dynamic Data & Local Organization (Project 3)
+# AWS Foundational Networking with Dynamic Data & Local Organization (Project 2)
 
 
 ## 📝 Project Description
