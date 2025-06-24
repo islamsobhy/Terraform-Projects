@@ -1,7 +1,6 @@
 # 🚀 Project 4: AWS Dynamic Multi-Resource Deployment & Advanced Referencing
 
-![Architecture Diagram Placeholder](https://via.placeholder.com/1000x450?text=Your+Architecture+Diagram+Here)\
-*(Replace this with an actual diagram illustrating your VPC, multiple public Subnets across AZs, Internet Gateway, Route Table, Security Group, and multiple EC2 instances.)*
+
 
 ## 📝 Project Overview & Goal
 
@@ -85,3 +84,37 @@ Define the following local values using advanced **referencing**:
     * Each subnet must **reference** `aws_vpc.main.id`.
 * **Route Table Associations (using `for_each`):**
     * Create `aws_route_table_association` resources using **`for_each = aws_subnet.public`** (which implicitly **references** all your dynamically
+    * * Each association must **reference** `each.value.id` (the subnet ID) and `aws_route_table.public.id`.
+* **Security Group:**
+    * Create an `aws_security_group` resource.
+    * Its inbound/outbound rules must **reference** `var.ssh_access_cidr`. It must also **reference** `aws_vpc.main.id`.
+* **Multiple EC2 Instances (using `count`):**
+    * Create `aws_instance` resources using **`count = var.num_web_servers`**.
+    * The `ami` must **reference** `data.aws_ami.latest.id`.
+    * The `instance_type` must **reference** `var.instance_type`.
+    * The `subnet_id` must **reference** one of the dynamically created public subnets by using `count.index` with the `element` **function** to cycle through the **referenced** list of `aws_subnet.public` IDs. This is a critical point for demonstrating complex **referencing**.
+    * The `vpc_security_group_ids` must **reference** your security group's ID.
+
+### 6. Advanced Outputs (`outputs.tf`)
+
+Define the following **outputs** using **splat expressions (`[*]`)** to expose collections of information:
+
+* `vpc_id`: The ID of the created VPC.
+* `public_subnet_ids`: A **list** of all created public subnet IDs, **referencing** `aws_subnet.public[*].id`.
+* `public_subnet_azs`: A **list** of all created public subnet Availability Zones, **referencing** `aws_subnet.public[*].availability_zone`.
+* `web_server_public_ips`: A **list** of the public IP addresses of all created EC2 instances, **referencing** `aws_instance.web_server[*].public_ip`.
+* `web_server_instance_ids`: A **list** of the instance IDs of all created EC2 instances, **referencing** `aws_instance.web_server[*].id`.
+
+---
+
+## 📁 Project Structure
+
+Your project directory should be organized as follows:
+
+.
+├── main.tf        # 🌐 Defines AWS resources (VPC, Subnet, IGW, Route Table, EC2, SG) & data sources.
+├── variables.tf   # 💡 Centralizes all input variables for customization.
+├── outputs.tf     # 📊 Exports key information about deployed resources.
+├── locals.tf      # ⚙️ Stores derived values and complex data structures.
+├── terraform.tfvars # (Optional) Custom variable values for your environment (⚡️ exclude from Git for secrets!).
+└── README.md      # 📖 This comprehensive guide to the project.
